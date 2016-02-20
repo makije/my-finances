@@ -15,4 +15,8 @@ class AccountController extends Controller
         return view('account.list')->with('accounts', request()->user()->accounts);
     }
 
+    public function addAccount()
+    {
+
+    }
 }

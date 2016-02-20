@@ -34,6 +34,8 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::group(['prefix' => 'account'], function(){
         Route::get('/', 'AccountController@showAccounts');
+
+        Route::get('/add', 'AccountController@addAccount');
     });
 
 });

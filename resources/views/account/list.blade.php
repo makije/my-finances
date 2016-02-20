@@ -33,6 +33,9 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    <a href="{{ action('AccountController@addAccount') }}">Add Account</a>
+
                 </div>
             </div>
         </div>

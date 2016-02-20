@@ -35,7 +35,7 @@ class AccountTest extends TestCase
 
         $this->user->accounts()->attach($accounts->pluck('id')->all());
 
-        $this->visit('/')
+        $this->visit('/account')
             ->see('Accounts')
             ->see($accounts->first()->name)
             ->see($accounts->first()->currency);
@@ -57,11 +57,34 @@ class AccountTest extends TestCase
             'balance' => 1010101,
         ]);
 
-        $this->visit('/')
+        $this->visit('/account')
             ->see('Accounts')
             ->see($account->name)
             ->see($account->currency)
             ->see($transaction->balance);
     }
 
+    /**
+     * @test
+     */
+    public function see_add_account_button()
+    {
+        $this->createUserAndLoginTheUserIn();
+
+        $this->visit('/account')
+            ->see('Accounts')
+            ->see('Add Account');
+    }
+
+    /**
+     * @test
+     */
+    public function press_add_account_button()
+    {
+        $this->createUserAndLoginTheUserIn();
+
+        $this->visit('/')
+            ->click('Add Account')
+            ->seePageIs('/account/add');
+    }
 }
