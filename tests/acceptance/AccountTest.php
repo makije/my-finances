@@ -87,4 +87,87 @@ class AccountTest extends TestCase
             ->click('Add Account')
             ->seePageIs('/account/add');
     }
+
+    /**
+     * @test
+     */
+    public function fill_the_add_account_form()
+    {
+        $this->createUserAndLoginTheUserIn();
+
+        $this->visit('/account/add')
+             ->see('New account')
+             ->see('Name')
+             ->see('Currency')
+             ->type('My new account', '#name')
+             ->type('my currency', '#currency')
+             ->press('Add account')
+             ->seeInDatabase('accounts', ['name' => 'My new account', 'currency' => 'my currency'])
+             ->seeInDatabase('account_user', ['account_id' => 1, 'user_id' => 1])
+             ->seePageIs('/account/1')
+             ->assertResponseOk();
+    }
+
+    /**
+     * @test
+     */
+    public function on_the_account_page_see_the_account_name()
+    {
+        $this->createUserAndLoginTheUserIn();
+
+        $account = new Account();
+        $account->name = 'Name';
+        $account->currency = 'currency';
+
+        $this->user->accounts()->save($account);
+
+        $this->visit('/account/' . $account->id)
+             ->see('name')
+             ->see('currency');
+    }
+
+    /**
+     * @test
+     */
+    public function on_the_account_page_see_transactions()
+    {
+        $this->createUserAndLoginTheUserIn();
+
+        $account = factory(Account::class)->create();
+
+        $transactions = factory(Transaction::class, 10)->create(['account_id' => $account->id]);
+
+        $this->visit('/account/' . $account->id)
+            ->see($account->name)
+            ->see($account->currency);
+
+        foreach($transactions as $transaction)
+        {
+            $this->see($transaction->statement);
+            $this->see($transaction->amount);
+            $this->see($transaction->balance);
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function click_on_account_goes_to_account_details()
+    {
+        $this->createUserAndLoginTheUserIn();
+
+        $account = factory(Account::class)->create();
+
+        $this->user->accounts()->attach($account->id);
+
+        factory(Transaction::class)->create([
+            'account_id' => $account->id,
+            'balance' => 1010101,
+        ]);
+
+        $this->visit('/account')
+            ->click($account->name)
+            ->seePageIs('/account/' . $account->id);
+    }
+
 }

@@ -30,6 +30,7 @@ $factory->define(App\Account::class, function (Faker\Generator $faker) {
 $factory->define(App\Transaction::class, function (Faker\Generator $faker) {
     return [
         'account_id' => factory(App\Account::class)->create()->id,
+        'statement' => $faker->sentence,
         'amount' => $faker->randomNumber(),
         'balance' => $faker->randomNumber(),
     ];

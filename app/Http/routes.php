@@ -36,6 +36,9 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/', 'AccountController@showAccounts');
 
         Route::get('/add', 'AccountController@addAccount');
+        Route::post('/add', 'AccountController@createAccount');
+
+        Route::get('/{account}', 'AccountController@showAccount');
     });
 
 });
