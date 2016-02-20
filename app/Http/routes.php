@@ -24,9 +24,7 @@
 
 Route::group(['middleware' => ['web']], function () {
 
-    Route::get('/', function () {
-        return view('welcome');
-    });
+    Route::get('/', 'PagesController@showWelcome');
 
     Route::group(['prefix' => 'auth'], function() {
         Route::auth();
