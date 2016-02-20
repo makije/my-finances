@@ -8,54 +8,20 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class FrontpageTest extends TestCase
+class AccountTest extends TestCase
 {
-
     use DatabaseTransactions;
 
     /**
      * @test
      */
-    public function see_welcome_and_application_name_when_not_logged_in()
-    {
-        $this->visit('/')
-             ->see('Welcome')
-             ->see('My Finances')
-             ->see('Login')
-             ->see('Register')
-             ->dontSee('Accounts')
-             ->assertResponseOk();
-    }
-
-    /**
-     * @test
-     */
-    public function click_register()
-    {
-        $this->visit('/')
-         ->click('Register')
-         ->seePageIs('/auth/register');
-    }
-
-    /**
-     * @test
-     */
-    public function click_login()
-    {
-        $this->visit('/')
-         ->click('Login')
-         ->seePageIs('/auth/login');
-    }
-
-    /**
-     * @test
-     */
-    public function when_logged_in_see_users_name()
+    public function see_the_account_page_if_logged_in()
     {
         $this->createUserAndLoginTheUserIn();
 
-        $this->visit('/')
-             ->see($this->user->name);
+        $this->visit('/account')
+            ->seePageIs('/account')
+            ->assertResponseOk();
     }
 
     /**
@@ -70,9 +36,9 @@ class FrontpageTest extends TestCase
         $this->user->accounts()->attach($accounts->pluck('id')->all());
 
         $this->visit('/')
-             ->see('Accounts')
-             ->see($accounts->first()->name)
-             ->see($accounts->first()->currency);
+            ->see('Accounts')
+            ->see($accounts->first()->name)
+            ->see($accounts->first()->currency);
     }
 
     /**

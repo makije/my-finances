@@ -14,7 +14,7 @@ class PagesController extends Controller
     {
         if(request()->user())
         {
-            return view('account-list')->with('accounts', request()->user()->accounts);
+            return view('account.list')->with('accounts', request()->user()->accounts);
         }
         else
         {

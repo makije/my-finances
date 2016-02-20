@@ -15,8 +15,7 @@ class ProfileTest extends TestCase
      */
     public function see_the_profile_page_if_logged_in()
     {
-        $user = factory(User::class)->create();
-        Auth::login($user);
+        $this->createUserAndLoginTheUserIn();
 
         $this->visit('/profile')
              ->seePageIs('/profile')
@@ -30,6 +29,17 @@ class ProfileTest extends TestCase
     {
         $this->visit('/profile')
              ->seePageIs('/auth/login');
+    }
+
+    /**
+     * @test
+     */
+    public function see_account_menu_entry()
+    {
+        $this->createUserAndLoginTheUserIn();
+
+        $this->visit('/')
+             ->see('My Accounts');
     }
 
 }
