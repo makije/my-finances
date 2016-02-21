@@ -45,7 +45,7 @@
         </div>
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                <a href="{{ action('AccountController@addAccount') }}">Add Account</a>
+                <a href="{{ action('AccountController@addAccount') }}" class="btn btn-default pull-right">Add Account</a>
             </div>
         </div>
     </div>

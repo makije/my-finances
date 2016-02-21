@@ -20,7 +20,7 @@
                                 <input type="text" class="form-control" name="currency" placeholder="Currency">
                             </div>
 
-                            <button type="submit" class="btn btn-default">Add account</button>
+                            <button type="submit" class="btn btn-default pull-right">Add account</button>
                         </form>
                     </div>
                 </div>
