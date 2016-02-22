@@ -46,6 +46,10 @@
                             </tbody>
                         </table>
 
+                        <div class="pull-right">
+                            <a href="{{ action('AccountController@addTransaction', $account) }}" class="btn btn-primary">Add transaction(s)</a>
+                        </div>
+
                     </div>
                 </div>
             </div>

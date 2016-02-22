@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Account;
 
+use App\Transaction;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -38,5 +39,19 @@ class AccountController extends Controller
         request()->user()->accounts()->save($account);
 
         return redirect()->action('AccountController@showAccount', ['id' => $account->id]);
+    }
+
+    public function addTransaction(Account $account)
+    {
+        return view('transaction.create')->with('account', $account);
+    }
+
+    public function addTransactionToAccount(Account $account)
+    {
+        $account->transactions()->save(new Transaction(
+            request()->all()
+        ));
+
+        return back();
     }
 }

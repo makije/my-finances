@@ -170,4 +170,57 @@ class AccountTest extends TestCase
             ->seePageIs('/account/' . $account->id);
     }
 
+    /**
+     * @test
+     */
+    public function see_add_transactions_button()
+    {
+        $this->createUserAndLoginTheUserIn();
+
+        $account = factory(Account::class)->create();
+
+        $this->visit('/account/' . $account->id)
+            ->see('Add transaction(s)');
+    }
+
+    /**
+     * @test
+     */
+    public function press_the_add_transactions_button()
+    {
+        $this->createUserAndLoginTheUserIn();
+
+        $account = factory(Account::class)->create();
+
+        $this->visit('/account/' . $account->id)
+            ->click('Add transaction(s)')
+            ->seePageIs('/account/' . $account->id . '/add-transaction');
+    }
+
+    /**
+     * @test
+     */
+    public function see_the_add_transaction_form()
+    {
+        $this->createUserAndLoginTheUserIn();
+
+        $account = factory(Account::class)->create();
+
+        $this->visit('/account/' . $account->id . '/add-transaction')
+            ->see('Statement')
+            ->see('Balance')
+            ->see('Amount')
+
+            ->type('Statement', 'statement')
+            ->type(10000, 'amount')
+            ->type(100000, 'balance')
+            ->press('Add transaction')
+
+            ->seeInDatabase('transactions', [
+                'statement' => 'Statement',
+                'amount' => 10000,
+                'balance' => 100000
+            ]);
+    }
+
 }
