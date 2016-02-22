@@ -16,7 +16,7 @@
                                 <input type="text" class="form-control" name="name" placeholder="Name">
                             </div>
                             <div class="form-group">
-                                <label for="currency">Password</label>
+                                <label for="currency">Currency</label>
                                 <input type="text" class="form-control" name="currency" placeholder="Currency">
                             </div>
 
