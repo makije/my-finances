@@ -33,5 +33,28 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Add transactions from CSV</div>
+
+                    <div class="panel-body">
+
+                        <form method="POST" action="{{ action('AccountController@addTransactionsFromCsvToAccount', $account) }}" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+
+                            <div class="form-group">
+                                <label for="csv">CSV</label>
+                                <input type="file" class="form-control" name="csv" placeholder="CSV">
+                            </div>
+
+                            <button type="submit" class="btn btn-default pull-right">Add transactions</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 @endsection

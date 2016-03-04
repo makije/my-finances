@@ -223,4 +223,18 @@ class AccountTest extends TestCase
             ]);
     }
 
+    /**
+     * @test
+     */
+    public function see_the_add_transaction_from_csv()
+    {
+        $this->createUserAndLoginTheUserIn();
+
+        $account = factory(Account::class)->create();
+
+        $this->visit('/account/' . $account->id . '/add-transaction')
+             ->see("Add transactions from CSV")
+             ->see("CSV")
+             ->see("Add transactions");
+    }
 }

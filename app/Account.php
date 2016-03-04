@@ -24,4 +24,8 @@ class Account extends Model
         return ($latestTransaction ? $latestTransaction->balance : 0 );
     }
 
+    public function addTransaction(Transaction $transaction)
+    {
+        return $this->transactions()->save($transaction);
+    }
 }
