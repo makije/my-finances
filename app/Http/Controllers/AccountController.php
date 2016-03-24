@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Account;
 
+use App\Actions\Account\AddTransactionToAccountFromCsv;
 use App\Transaction;
-use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class AccountController extends Controller
 {
@@ -50,7 +51,13 @@ class AccountController extends Controller
     {
         $account->addTransaction(
             new Transaction(
-                request()->all()
+                array_merge(
+                    request()->all(),
+                    [
+                        'executed' => Carbon::now(),
+                        'rate' => Carbon::now(),
+                    ]
+                )
             )
         );
 
@@ -60,19 +67,10 @@ class AccountController extends Controller
     public function addTransactionsFromCsvToAccount(Account $account)
     {
         $file = request()->file('csv');
-
         $handle = fopen($file->getPathname(), 'r');
 
-        while($line = fgetcsv($handle, 1000, ';'))
-        {
-            $transaction = Transaction::firstOrNew([
-                'statement' => $line[2],
-                'amount' => $line[3],
-                'balance' => $line[4],
-            ]);
-
-            $account->addTransaction($transaction);
-        }
+        $action = new AddTransactionToAccountFromCsv($account, $handle);
+        $result = $action->process();
 
         return back();
     }

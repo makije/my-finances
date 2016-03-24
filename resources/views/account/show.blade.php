@@ -9,7 +9,7 @@
 
                     <div class="panel-body">
 
-                        <table>
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th class="col-md-7">
@@ -33,13 +33,13 @@
                                             {{ $transaction->statement }}
                                         </td>
                                         <td class="col-md-1">
-                                            {{ $transaction->amount }}
+                                            {{ number_format($transaction->amount / 100, 2, ',', '.') }}
                                         </td>
                                         <td class="col-md-1">
-                                            {{ $transaction->balance }}
+                                            {{ number_format($transaction->balance / 100, 2, ',', '.') }}
                                         </td>
                                         <td class="col-md-3">
-                                            {{ $transaction->created_at }}
+                                            {{ $transaction->executed->toDateString() }}
                                         </td>
                                     </tr>
                                 @endforeach

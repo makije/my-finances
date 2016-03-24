@@ -144,8 +144,8 @@ class AccountTest extends TestCase
         foreach($transactions as $transaction)
         {
             $this->see($transaction->statement);
-            $this->see($transaction->amount);
-            $this->see($transaction->balance);
+            $this->see(number_format($transaction->amount / 100, 2, ',', '.'));
+            $this->see(number_format($transaction->balance / 100, 2, ',', '.'));
         }
     }
 

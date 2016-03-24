@@ -14,7 +14,7 @@ class Account extends Model
 
     public function transactions()
     {
-        return $this->hasMany(Transaction::class)->orderBy('created_at', 'desc');
+        return $this->hasMany(Transaction::class)->orderBy('executed', 'desc');
     }
 
     public function getCurrentBalance()

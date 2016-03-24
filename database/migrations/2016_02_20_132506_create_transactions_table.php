@@ -18,6 +18,8 @@ class CreateTransactionsTable extends Migration
             $table->string('statement');
             $table->bigInteger('amount');
             $table->bigInteger('balance');
+            $table->timestamp('executed');
+            $table->timestamp('rate');
             $table->timestamps();
         });
     }

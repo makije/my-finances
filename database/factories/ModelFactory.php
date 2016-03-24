@@ -33,5 +33,7 @@ $factory->define(App\Transaction::class, function (Faker\Generator $faker) {
         'statement' => $faker->sentence,
         'amount' => $faker->randomNumber(),
         'balance' => $faker->randomNumber(),
+        'executed' => \Carbon\Carbon::now(),
+        'rate' => \Carbon\Carbon::now(),
     ];
 });
